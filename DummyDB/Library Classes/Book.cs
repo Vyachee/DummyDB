@@ -25,7 +25,7 @@
             return $"{ID} | {Title} | {AuthorName}";
         }
 
-        public void A(ReaderTicket a)
+        public void AddConnectionToReader(ReaderTicket a)
         {
             CurrentOwner = a;
         }
