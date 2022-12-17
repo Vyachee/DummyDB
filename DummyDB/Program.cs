@@ -42,7 +42,7 @@ namespace DummyDB
                     for (int j = 0; j < readers.Length; j++)
                     {
                         if (takenBook.ReaderId == readers[j].ID && takenBook.BookId == books[i].ID)
-                            books[i].A(readers[j]);
+                            books[i].AddConnectionToReader(readers[j]);
                     }
 
                 }
