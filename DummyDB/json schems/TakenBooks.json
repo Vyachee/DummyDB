@@ -1,0 +1,23 @@
+{
+  "name": "TakenBooks",
+  "columns": [
+    {
+      "name": "BookID",
+      "type": "int",
+      "IsPrimary": true
+    },
+    {
+      "name": "ReaderID",
+      "type": "int",
+      "IsPrimary": true
+    },
+    {
+      "name": "GettingTime",
+      "type": "dateTime"
+    },
+    {
+      "name": "ReturningTime",
+      "type": "dateTime"
+    }
+  ]
+}

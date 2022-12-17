@@ -1,0 +1,30 @@
+{
+  "name": "Books",
+  "columns": [
+    {
+      "name": "ID",
+      "type": "int",
+      "IsPrimary": true
+    },
+    {
+      "name": "Title",
+      "type": "string"
+    },
+    {
+      "name": "AuthorName",
+      "type": "string"
+    },
+    {
+      "name": "PublicationYear",
+      "type": "int"
+    },
+    {
+      "name": "ShelfIndex",
+      "type": "int"
+    },
+    {
+      "name": "BookcaseIndex",
+      "type": "int"
+    }
+  ]
+}
