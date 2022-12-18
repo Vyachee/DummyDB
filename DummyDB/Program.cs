@@ -26,8 +26,8 @@
             TakenBook[] takenBooks = FillTakenBooksArray(takenBooksData, books, readers);
 
             TakenBook[] test = CreateConnection(takenBooks, books);
-            foreach (TakenBook tBook in test)
-                Console.WriteLine(tBook);
+            Display display = new(test);
+            display.Start();
         }
 
 

@@ -18,7 +18,7 @@
         public override string ToString()
         {
             if (GettingTime == DateTime.MinValue)
-                _gettingTime = "";
+                _gettingTime = " ";
             else
                 _gettingTime = GettingTime.ToString();
             return $"{Book.Title} | {Book.AuthorName} | {Reader.FullName} | {_gettingTime}";
