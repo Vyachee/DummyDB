@@ -2,18 +2,22 @@
 {
     public class TakenBook
     {
-        public uint BookId { get; }
-        public uint ReaderId { get; }
+        public Book Book { get; }
+        public ReaderTicket Reader { get; }
         public DateTime GettingTime { get; }
         public DateTime ReturningTime { get; }
-        public TakenBook(uint bookId, uint readerId, DateTime gettingTime, DateTime returningTime)
+        public TakenBook(Book book, ReaderTicket reader, DateTime gettingTime, DateTime returningTime)
         {
-            BookId = bookId;
-            ReaderId = readerId;
+            Book = book;
+            Reader = reader;
             GettingTime = gettingTime;
             ReturningTime = returningTime;
         }
 
+        public override string ToString()
+        {
+            return $"{Book.Title} | {Book.AuthorName} | {Reader.FullName} | {GettingTime}";
+        }
     }
 
 }

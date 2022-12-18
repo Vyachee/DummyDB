@@ -4,20 +4,14 @@ namespace DummyDB
 {
     class Program
     {
-        static void Main()
+        public static void Main()
         {
             Console.ForegroundColor = ConsoleColor.DarkMagenta;
 
             string projectFilePath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
 
-            string booksInCsvPath = projectFilePath + "//Data in csv//Books.csv";
-            string booksInJsonPath = projectFilePath + "//json schems//Books.json";
-            string readersInCsvPath = projectFilePath + "//Data in csv//Readers.csv";
-            string readersInJsonPath = projectFilePath + "//json schems//Readers.json";
-
-            CSVReader reader = new();
-            string[] readersData = reader.ReadFromCSV(readersInCsvPath, readersInJsonPath);
-            string[] booksData = reader.ReadFromCSV(booksInCsvPath, booksInJsonPath);
+            string[] booksData = GetData(projectFilePath, "Books");
+            string[] readersData = GetData(projectFilePath, "Readers");
 
 
             if (readersData == null || booksData == null)
@@ -27,34 +21,18 @@ namespace DummyDB
             Book[] books = FillBookArray(booksData);
             ReaderTicket[] readers = FillReadersArray(readersData);
 
-            string takenBooksInJsonPath = projectFilePath + "//json schems//TakenBooks.json";
-            string takenbooksInCsvPath = projectFilePath + "//Data in csv//TakenBooks.csv";
-            string[] takenBooksData = reader.ReadFromCSV(takenbooksInCsvPath, takenBooksInJsonPath);
+            string[] takenBooksData = GetData(projectFilePath, "TakenBooks");
 
             if (takenBooksData == null)
                 return;
+            TakenBook[] takenBooks = FillTakenBooksArray(takenBooksData, books, readers);
 
-            TakenBook[] takenBooks = FillTakenBooksArray(takenBooksData);
-            foreach (TakenBook takenBook in takenBooks)
-            {
-                for (int i = 0; i < books.Length; i++)
-                {
-                    for (int j = 0; j < readers.Length; j++)
-                    {
-                        if (takenBook.ReaderId == readers[j].ID && takenBook.BookId == books[i].ID)
-                            books[i].AddConnectionToReader(readers[j]);
-                    }
-
-                }
-
-            }
-
-            foreach (Book book in books)
-                Console.WriteLine(book);
+            foreach (TakenBook tBook in takenBooks)
+                Console.WriteLine(tBook);
         }
 
 
-        static Book[] FillBookArray(string[] input)
+        private static Book[] FillBookArray(string[] input)
         {
             Book[] books = new Book[input.Length];
             for (int i = 0; i < books.Length; i++)
@@ -71,7 +49,7 @@ namespace DummyDB
             return books;
         }
 
-        static ReaderTicket[] FillReadersArray(string[] input)
+        private static ReaderTicket[] FillReadersArray(string[] input)
         {
             ReaderTicket[] readers = new ReaderTicket[input.Length];
             for (int i = 0; i < readers.Length; i++)
@@ -88,16 +66,38 @@ namespace DummyDB
             return readers;
         }
 
-        static TakenBook[] FillTakenBooksArray(string[] input)
+        private static TakenBook[] FillTakenBooksArray(string[] input, Book[] books, ReaderTicket[] readers)
         {
             TakenBook[] result = new TakenBook[input.Length];
             for (int i = 0; i < result.Length; i++)
             {
                 string[] line = input[i].Split(';');
-                result[i] = new TakenBook(uint.Parse(line[0]), uint.Parse(line[1]), DateTime.Parse(line[2]), DateTime.Parse(line[3]));
+                Book b = new();
+                for (int j = 0; j < books.Length; j++)
+                {
+                    if (uint.Parse(line[0]) == books[j].ID)
+                        b = books[j];
+                }
+
+                ReaderTicket r = new();
+                for (int j = 0; j < readers.Length; j++)
+                {
+                    if (uint.Parse(line[1]) == readers[j].ID)
+                        r = readers[j];
+                }
+
+                result[i] = new TakenBook(b, r, DateTime.Parse(line[2]), DateTime.Parse(line[3]));
             }
 
             return result;
+        }
+
+        private static string[] GetData(string filePath, string dataName)
+        {
+            string inCSVPath = filePath + "//Data in csv//" + dataName + ".csv";
+            string inJsonPath = filePath + "//json schems//" + dataName + ".json";
+            CSVReader reader = new();
+            return reader.ReadFromCSV(inCSVPath, inJsonPath);
         }
 
     }

@@ -9,7 +9,6 @@
         public uint ShelfIndex { get; }
         public uint BookcaseIndex { get; }
         public uint ID { get; }
-        private uint _id;
         public Book(uint id, string title, FullName authorName, uint publicationYear, uint shelfIndex, uint bookcaseIndex)
         {
             ID = id;
@@ -20,14 +19,14 @@
             BookcaseIndex = bookcaseIndex;
         }
 
+        public Book()
+        {
+
+        }
+
         public override string ToString()
         {
             return $"{ID} | {Title} | {AuthorName}";
-        }
-
-        public void AddConnectionToReader(ReaderTicket a)
-        {
-            CurrentOwner = a;
         }
 
     }
