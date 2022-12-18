@@ -1,6 +1,4 @@
-﻿using static System.Reflection.Metadata.BlobBuilder;
-
-namespace DummyDB
+﻿namespace DummyDB
 {
     class Program
     {
@@ -27,7 +25,8 @@ namespace DummyDB
                 return;
             TakenBook[] takenBooks = FillTakenBooksArray(takenBooksData, books, readers);
 
-            foreach (TakenBook tBook in takenBooks)
+            TakenBook[] test = CreateConnection(takenBooks, books);
+            foreach (TakenBook tBook in test)
                 Console.WriteLine(tBook);
         }
 
@@ -86,9 +85,31 @@ namespace DummyDB
                         r = readers[j];
                 }
 
-                result[i] = new TakenBook(b, r, DateTime.Parse(line[2]), DateTime.Parse(line[3]));
+                result[i] = new TakenBook(b, r, DateTime.Parse(line[2]));
             }
 
+            return result;
+        }
+
+        private static TakenBook[] CreateConnection(TakenBook[] takenBooks, Book[] books)
+        {
+            TakenBook[] result = new TakenBook[books.Length];
+            ReaderTicket noOne = new ReaderTicket(0, new FullName("", "", ""));
+            for (int i = 0; i < result.Length; i++)
+            {
+                for (int j = 0; j < takenBooks.Length; j++)
+                {
+                    if (takenBooks[j].Book.ID == i + 1)
+                    {
+                        result[i] = takenBooks[j];
+                        break;
+                    }
+                    else
+                        result[i] = new TakenBook(books[i], noOne, DateTime.MinValue);
+
+                }
+
+            }
             return result;
         }
 

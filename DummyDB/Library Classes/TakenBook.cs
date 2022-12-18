@@ -6,17 +6,22 @@
         public ReaderTicket Reader { get; }
         public DateTime GettingTime { get; }
         public DateTime ReturningTime { get; }
-        public TakenBook(Book book, ReaderTicket reader, DateTime gettingTime, DateTime returningTime)
+
+        private string _gettingTime;
+        public TakenBook(Book book, ReaderTicket reader, DateTime gettingTime)
         {
             Book = book;
             Reader = reader;
             GettingTime = gettingTime;
-            ReturningTime = returningTime;
         }
 
         public override string ToString()
         {
-            return $"{Book.Title} | {Book.AuthorName} | {Reader.FullName} | {GettingTime}";
+            if (GettingTime == DateTime.MinValue)
+                _gettingTime = "";
+            else
+                _gettingTime = GettingTime.ToString();
+            return $"{Book.Title} | {Book.AuthorName} | {Reader.FullName} | {_gettingTime}";
         }
     }
 
