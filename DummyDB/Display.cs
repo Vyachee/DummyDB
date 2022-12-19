@@ -47,7 +47,8 @@
             Console.WriteLine(border);
             for (int i = 0; i < TakenBooks.Length; i++)
             {
-                Console.WriteLine(DrawFloor(TakenBooks[i]));
+                string floor = DrawFloor(TakenBooks[i]);
+                Console.WriteLine(floor);
                 Console.WriteLine(border);
             }
 
@@ -55,20 +56,20 @@
 
         private string DrawHeader(int titles, int authors, int readers, int dates)
         {
-            string result = "|Название";
-            for (int i = 0; i < titles - 8; i++)
+            string result = "| Название";
+            for (int i = 0; i < titles - 9; i++)
                 result += ' ';
-            result += " |";
+            result += " | ";
             result += "Автор";
-            for (int i = 0; i < authors - 5; i++)
+            for (int i = 0; i < authors - 6; i++)
                 result += ' ';
-            result += " |";
+            result += " | ";
             result += "Читает";
-            for (int i = 0; i < readers - 6; i++)
+            for (int i = 0; i < readers - 7; i++)
                 result += ' ';
-            result += " |";
+            result += " | ";
             result += "Взял";
-            for (int i = 0; i < dates - 4; i++)
+            for (int i = 0; i < dates - 5; i++)
                 result += ' ';
             result += " |";
             return result;
