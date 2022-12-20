@@ -53,7 +53,7 @@ namespace DummyDB
                         }
                         break;
                     case "dateTime":
-                        if (!DateTime.TryParse(line[i], out DateTime time))
+                        if (!DateTime.TryParse(line[i], out DateTime  time))
                         {
                             ShowError(raw, i, line);
                             return false;
