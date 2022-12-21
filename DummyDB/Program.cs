@@ -12,7 +12,7 @@
             string[] readersData = GetData(projectFilePath, "Readers");
 
 
-            if (readersData == null || booksData == null)
+            if (readersData is null || booksData is null)
                 return;
 
 
@@ -21,7 +21,7 @@
 
             string[] takenBooksData = GetData(projectFilePath, "TakenBooks");
 
-            if (takenBooksData == null)
+            if (takenBooksData is null)
                 return;
             TakenBook[] takenBooks = FillTakenBooksArray(takenBooksData, books, readers);
 
@@ -115,8 +115,8 @@
 
         private static string[] GetData(string filePath, string dataName)
         {
-            string inCSVPath = filePath + "//Data in csv//" + dataName + ".csv";
-            string inJsonPath = filePath + "//json schems//" + dataName + ".json";
+            string inCSVPath = $"{filePath}//Data//{dataName}.csv";
+            string inJsonPath = $"{filePath}//Schemas//{dataName}.json";
             CSVReader reader = new();
             return reader.ReadFromCSV(inCSVPath, inJsonPath);
         }

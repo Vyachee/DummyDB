@@ -6,17 +6,17 @@
         {
             string[] csv = File.ReadAllLines(dataFilePath);
             JSONValidator validator = new(csv);
-            JSONSchema schema = validator.GetSchema(jsonSchemaFilePath);
+            JSONSchema schema = JSONSchema.FromJsonFile(jsonSchemaFilePath);
 
 
             try
             {
                 if (validator.CheckBySchema(schema))
-                    return csv.Skip(1).ToArray();
+                    return csv[1..];
             }
             catch (Exception ex)
             {
-                if (ex.GetType() == typeof(FormatException))
+                if (ex is FormatException)
                     Console.WriteLine("Данные были введены некорректно. Проверьте их в исходных файлах и повторите попытку позже.");
             }
             return null;

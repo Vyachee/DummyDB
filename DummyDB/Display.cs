@@ -1,4 +1,6 @@
-﻿namespace DummyDB
+﻿using System.Text;
+
+namespace DummyDB
 {
     public class Display
     {
@@ -41,9 +43,9 @@
                 dates[i] = TakenBooks[i].GettingTime.ToString();
             }
             _dates = GetMaxLength(dates);
-            string header = DrawHeader(_titles, _authors, _readers, _dates);
+            string header = DrawHeader();
             Console.WriteLine(header);
-            string border = DrawBorder(_titles, _authors, _readers, _dates);
+            string border = DrawBorder();
             Console.WriteLine(border);
             for (int i = 0; i < TakenBooks.Length; i++)
             {
@@ -54,74 +56,78 @@
 
         }
 
-        private string DrawHeader(int titles, int authors, int readers, int dates)
+        private string DrawHeader()
         {
-            string result = "| Название";
-            for (int i = 0; i < titles - 9; i++)
-                result += ' ';
-            result += " | ";
-            result += "Автор";
-            for (int i = 0; i < authors - 6; i++)
-                result += ' ';
-            result += " | ";
-            result += "Читает";
-            for (int i = 0; i < readers - 7; i++)
-                result += ' ';
-            result += " | ";
-            result += "Взял";
-            for (int i = 0; i < dates - 5; i++)
-                result += ' ';
-            result += " |";
-            return result;
+            StringBuilder result = new StringBuilder("| Название");
+            for (int i = 0; i < _titles - 9; i++)
+                result.Append(" ");
+            result.Append(" | Автор");
+
+            for (int i = 0; i < _authors - 6; i++)
+                result.Append(" ");
+            result.Append(" | Читает");
+
+            for (int i = 0; i < _readers - 7; i++)
+                result.Append(" ");
+            result.Append(" | Взял");
+            for (int i = 0; i < _dates - 5; i++)
+                result.Append(" ");
+            result.Append(" |");
+            return result.ToString();
         }
 
-        private string DrawBorder(int titles, int authors, int readers, int dates)
+        private string DrawBorder()
         {
-            string result = "|";
-            for (int i = 0; i < titles + 1; i++)
-                result += "-";
-            result += "|";
-            for (int i = 0; i < authors + 1; i++)
-                result += "-";
-            result += "|";
-            for (int i = 0; i < readers + 1; i++)
-                result += "-";
-            result += "|";
-            for (int i = 0; i < dates + 1; i++)
-                result += "-";
-            result += "|";
-            return result;
+            StringBuilder result = new StringBuilder("|");
+            for (int i = 0; i < _titles + 1; i++)
+                result.Append("-");
+            result.Append("|");
+
+            for (int i = 0; i < _authors + 1; i++)
+                result.Append("-");
+            result.Append("|");
+
+            for (int i = 0; i < _readers + 1; i++)
+                result.Append("-");
+            result.Append("|");
+
+            for (int i = 0; i < _dates + 1; i++)
+                result.Append("-");
+            result.Append("|");
+
+            return result.ToString();
         }
 
         private string DrawFloor(TakenBook book)
         {
-            string result = "|";
+            StringBuilder result = new StringBuilder("|");
             string title = book.Book.Title;
-            result += title;
+            result.Append(title);
             for (int i = 0; i < _titles - title.Length; i++)
-                result += " ";
-            result += " |";
+                result.Append(" ");
+            result.Append(" |");
 
             string author = book.Book.AuthorName.Surname;
-            result += author;
+            result.Append(author);
             for (int i = 0; i < _authors - author.Length; i++)
-                result += " ";
-            result += " |";
+                result.Append(" ");
+            result.Append(" |");
 
-            string reader = book.Reader.FullName.Surname + " " + book.Reader.FullName.Name;
-            result += reader;
+            string reader = book.Reader.FullName.Surname;
+            result.Append(reader);
             for (int i = 0; i < _readers - reader.Length; i++)
-                result += " ";
-            result += " |";
+                result.Append(" ");
+            result.Append(" |");
 
             string date = book.GettingTime.ToString();
-            if (date == "01.01.0001 0:00:00")
+            if (date == DateTime.MinValue.ToString())
                 date = "";
-            result += date;
+            result.Append(date);
             for (int i = 0; i < _dates - date.Length; i++)
-                result += " ";
-            result += " |";
-            return result;
+                result.Append(" ");
+            result.Append(" |");
+
+            return result.ToString();
         }
 
         private int GetMaxLength(string[] input)
