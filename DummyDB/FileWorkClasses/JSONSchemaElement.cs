@@ -11,6 +11,6 @@ namespace DummyDB
         public string Type { get; private set; }
 
         [JsonProperty(PropertyName = "IsPrimary")]
-        public bool IsPrimary { get; private set; }
+        public bool IsPrimary { get; private set; } = false;
     }
 }

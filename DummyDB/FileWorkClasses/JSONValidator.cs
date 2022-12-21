@@ -25,12 +25,6 @@ namespace DummyDB
             return flag && checkedColumns;
         }
 
-        public JSONSchema GetSchema(string filePath)
-        {
-            string fileText = File.ReadAllText(filePath);
-            return JsonConvert.DeserializeObject<JSONSchema>(fileText);
-        }
-
         private bool CheckTypes(string input, JSONSchema schema, int raw)
         {
             string[] line = input.Split(';');
